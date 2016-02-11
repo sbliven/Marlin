@@ -81,7 +81,7 @@
 // User-specified version info of this build to display in [Pronterface, etc] terminal window during
 // startup. Implementation of an idea by Prof Braino to inform user that any changes made to this
 // build by the user have been successfully uploaded into firmware.
-#define STRING_CONFIG_H_AUTHOR "(none, default config)" // Who made the changes.
+#define STRING_CONFIG_H_AUTHOR "Spencer Bliven" // Who made the changes.
 #define SHOW_BOOTSCREEN
 #define STRING_SPLASH_LINE1 SHORT_BUILD_VERSION // will be shown during bootup in line 1
 #define STRING_SPLASH_LINE2 WEBSITE_URL         // will be shown during bootup in line 2
@@ -123,7 +123,8 @@
  *
  * :[2400, 9600, 19200, 38400, 57600, 115200, 250000, 500000, 1000000]
  */
-#define BAUDRATE 250000
+//#define BAUDRATE 250000
+#define BAUDRATE 115200
 
 // Enable the Bluetooth serial interface on AT90USB devices
 //#define BLUETOOTH
@@ -380,9 +381,9 @@
   // If you are using a pre-configured hotend then you can use one of the value sets by uncommenting it
 
   // Ultimaker
-  #define DEFAULT_Kp 22.2
-  #define DEFAULT_Ki 1.08
-  #define DEFAULT_Kd 114
+  //#define  DEFAULT_Kp 22.2
+  //#define  DEFAULT_Ki 1.08
+  //#define  DEFAULT_Kd 114
 
   // MakerGear
   //#define DEFAULT_Kp 7.0
@@ -393,6 +394,34 @@
   //#define DEFAULT_Kp 63.0
   //#define DEFAULT_Ki 2.25
   //#define DEFAULT_Kd 440
+
+//measured with M303 195
+// bias: 72 d: 72 min: 149.21 max: 150.90
+// Ku: 108.86 Tu: 34.08
+// Clasic PID
+// Kp: 65.32
+// Ki: 3.83
+// Kd: 278.23
+
+   //Tended to overshoot badly
+   //#define  DEFAULT_Kp 65.32
+   //#define  DEFAULT_Ki 3.83
+   //#define  DEFAULT_Kd 278.23
+
+// Clasic PID
+// Kp: 43.32
+// Ki: 2.02
+// Kd: 232.07
+// bias: 71 d: 71 min: 148.80 max: 151.33
+// Ku: 71.42 Tu: 42.34
+// Clasic PID
+// Kp: 42.85
+// Ki: 2.02
+// Kd: 226.77
+
+  #define  DEFAULT_Kp 42.85
+  #define  DEFAULT_Ki 2.02
+  #define  DEFAULT_Kd 226.77
 
 #endif // PIDTEMP
 
@@ -514,8 +543,9 @@
 //#define USE_YMAX_PLUG
 //#define USE_ZMAX_PLUG
 
-// Enable pullup for all endstops to prevent a floating state
-#define ENDSTOPPULLUPS
+// coarse Endstop Settings
+//#define ENDSTOPPULLUPS // Comment this out (using // at the start of the line) to disable the endstop pullup resistors
+
 #if DISABLED(ENDSTOPPULLUPS)
   // Disable ENDSTOPPULLUPS to set pullups individually
   //#define ENDSTOPPULLUP_XMAX
@@ -608,7 +638,10 @@
  * Override with M92
  *                                      X, Y, Z, E0 [, E1[, E2[, E3[, E4]]]]
  */
-#define DEFAULT_AXIS_STEPS_PER_UNIT   { 80, 80, 4000, 500 }
+//#define DEFAULT_AXIS_STEPS_PER_UNIT   { 80, 80, 4000, 500 }  // default steps per unit for Ultimaker
+//#define MICROSTEPS 16
+//#define DEFAULT_AXIS_STEPS_PER_UNIT   {200*MICROSTEPS/40.,200*MICROSTEPS/40,200*MICROSTEPS*.80,200*MICROSTEPS*0.27202640660869809}
+#define DEFAULT_AXIS_STEPS_PER_UNIT   {80,80,2560,870}
 
 /**
  * Default Max Feed Rate (mm/s)
@@ -849,13 +882,13 @@
 
 // Invert the stepper direction. Change (or reverse the motor connector) if an axis goes the wrong way.
 #define INVERT_X_DIR false
-#define INVERT_Y_DIR true
-#define INVERT_Z_DIR false
+#define INVERT_Y_DIR false
+#define INVERT_Z_DIR true
 
 // @section extruder
 
 // For direct drive extruder v9 set to true, for geared extruder set to false.
-#define INVERT_E0_DIR false
+#define INVERT_E0_DIR true
 #define INVERT_E1_DIR false
 #define INVERT_E2_DIR false
 #define INVERT_E3_DIR false
@@ -872,14 +905,14 @@
 
 // Direction of endstops when homing; 1=MAX, -1=MIN
 // :[-1,1]
-#define X_HOME_DIR -1
-#define Y_HOME_DIR -1
+#define X_HOME_DIR 1
+#define Y_HOME_DIR 1
 #define Z_HOME_DIR -1
 
 // @section machine
 
 // The size of the print bed
-#define X_BED_SIZE 200
+#define X_BED_SIZE 190
 #define Y_BED_SIZE 200
 
 // Travel limits (mm) after homing, corresponding to endstop positions.
@@ -888,7 +921,7 @@
 #define Z_MIN_POS 0
 #define X_MAX_POS X_BED_SIZE
 #define Y_MAX_POS Y_BED_SIZE
-#define Z_MAX_POS 200
+#define Z_MAX_POS 115
 
 /**
  * Software Endstops
@@ -1223,7 +1256,7 @@
 // M501 - reads parameters from EEPROM (if you need reset them after you changed them temporarily).
 // M502 - reverts to the default "factory settings".  You still need to store them in EEPROM afterwards if you want to.
 //
-//#define EEPROM_SETTINGS // Enable for M500 and M501 commands
+#define EEPROM_SETTINGS // Enable for M500 and M501 commands
 //#define DISABLE_M503    // Saves ~2700 bytes of PROGMEM. Disable for release!
 #define EEPROM_CHITCHAT   // Give feedback on EEPROM commands. Disable to save PROGMEM.
 
