@@ -658,10 +658,25 @@
  * Override with M92
  *                                      X, Y, Z, E0 [, E1[, E2[, E3[, E4]]]]
  */
+
+/* Wade's with Astrosyn 1.8deg stepper */
+/*
 //#define DEFAULT_AXIS_STEPS_PER_UNIT   { 80, 80, 4000, 500 }  // default steps per unit for Ultimaker
 //#define MICROSTEPS 16
 //#define DEFAULT_AXIS_STEPS_PER_UNIT   {200*MICROSTEPS/40.,200*MICROSTEPS/40,200*MICROSTEPS*.80,200*MICROSTEPS*0.27202640660869809}
-#define DEFAULT_AXIS_STEPS_PER_UNIT   {80,80,2560,870}
+//#define DEFAULT_AXIS_STEPS_PER_UNIT   {80,80,2560,870}
+#define DEFAULT_AXIS_STEPS_PER_UNIT   {80,80,2560,544}
+*/
+
+/* Wade's with E3D compact powerful stepper
+ * 0.9 deg/step -> 400 step/rev
+ * 16 microsteps
+ * 45:11 gear ratio
+ * 7.3 hobb diameter
+ * ====
+ * 400 * 16 * 45/11 /7.3 / pi = 1141 steps/mm
+ */
+#define DEFAULT_AXIS_STEPS_PER_UNIT   {80,80,2560,1134}
 
 /**
  * Default Max Feed Rate (mm/s)
